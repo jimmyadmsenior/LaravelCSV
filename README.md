@@ -39,3 +39,30 @@ Um sistema de cadastro de pacientes desenvolvido em Laravel com funcionalidade d
    ```bash
    git clone https://github.com/jimmyadmsenior/LaravelCSV.git
    cd LaravelCSV
+
+2. Instale as dependências PHP
+   ```bash
+   composer install
+   
+3. Instale as dependências JavaScript
+   ```bash
+   npm install && npm run dev
+
+4. Configure o ambiente
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+
+Edite o arquivo .env com as configurações do seu banco de dados
+
+5. Execute as migrações
+   ```bash
+   php artisan migrate
+
+6. (Opcional) Alimente o banco com dados de teste
+   ```bash
+   php artisan db:seed
+
+7. Inicie o servidor de desenvolvimento
+   ```bash
+   php artisan serve
