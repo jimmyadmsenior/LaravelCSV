@@ -17,7 +17,40 @@ class PacienteController extends Controller
         $pdf = Pdf::loadView('pacientes.pdf', compact('pacientes'));
         return $pdf->download('pacientes.pdf');
     }
-    
+
+    public function exportCsv()
+    {
+        $pacientes = Paciente::all(['nome', 'cpf', 'email', 'idade']);
+
+        $csvHeader = ['Nome', 'CPF', 'Email', 'Idade'];
+        $csvData = $pacientes->map(function ($paciente) {
+            return [
+                $paciente->nome,
+                $paciente->cpf,
+                $paciente->email,
+                $paciente->idade,
+            ];
+        });
+
+        $fileName = 'pacientes.csv';
+        $handle = fopen('php://output', 'w');
+        ob_start();
+
+        // Add header
+        fputcsv($handle, $csvHeader);
+
+        // Add data rows
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+        $content = ob_get_clean();
+
+        return response($content)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', "attachment; filename={$fileName}");
+    }
     
     public function index()
     {
