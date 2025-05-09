@@ -10,39 +10,39 @@ use App\Exports\PacientesExport;
 class PacienteController extends Controller
 {
 
-    public function exportCsv()
-    {
-        $pacientes = Paciente::all(['nome', 'cpf', 'email', 'idade']);
+        public function exportCsv()
+        {
+            $pacientes = Paciente::all(['nome', 'cpf', 'email', 'idade']);
 
-        $csvHeader = ['Nome', 'CPF', 'Email', 'Idade'];
-        $csvData = $pacientes->map(function ($paciente) {
-            return [
-                $paciente->nome,
-                $paciente->cpf,
-                $paciente->email,
-                $paciente->idade,
-            ];
-        });
+            $csvHeader = ['Nome', 'CPF', 'Email', 'Idade'];
+            $csvData = $pacientes->map(function ($paciente) {
+                return [
+                    $paciente->nome,
+                    $paciente->cpf,
+                    $paciente->email,
+                    $paciente->idade,
+                ];
+            });
 
-        $fileName = 'pacientes.csv';
-        $handle = fopen('php://output', 'w');
-        ob_start();
+            $fileName = 'pacientes.csv';
+            $handle = fopen('php://output', 'w');
+            ob_start();
 
-        // Add header
-        fputcsv($handle, $csvHeader);
+            // Add header
+            fputcsv($handle, $csvHeader);
 
-        // Add data rows
-        foreach ($csvData as $row) {
-            fputcsv($handle, $row);
+            // Add data rows
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+            $content = ob_get_clean();
+
+            return response($content)
+                ->header('Content-Type', 'text/csv')
+                ->header('Content-Disposition', "attachment; filename={$fileName}");
         }
-
-        fclose($handle);
-        $content = ob_get_clean();
-
-        return response($content)
-            ->header('Content-Type', 'text/csv')
-            ->header('Content-Disposition', "attachment; filename={$fileName}");
-    }
     
     public function index()
     {
