@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\PacientesExport;
 
 class PacienteController extends Controller
