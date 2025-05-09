@@ -11,13 +11,6 @@ use App\Exports\PacientesExport;
 class PacienteController extends Controller
 {
 
-    public function exportPdf()
-    {
-        $pacientes = Paciente::all();
-        $pdf = Pdf::loadView('pacientes.pdf', compact('pacientes'));
-        return $pdf->download('pacientes.pdf');
-    }
-
     public function exportCsv()
     {
         $pacientes = Paciente::all(['nome', 'cpf', 'email', 'idade']);

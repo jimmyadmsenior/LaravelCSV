@@ -4,7 +4,7 @@
     <p style="color:green">{{ session('success') }}</p>
 @endif
 
-<a href="{{ route('pacientes.export.pdf') }}">Exportar PDF</a>
+<a href="{{ route('pacientes.export.csv') }}">Exportar CSV</a>
 <a href="{{ route('pacientes.create') }}">Novo Paciente</a>
 
 <table border="1" cellpadding="5">
